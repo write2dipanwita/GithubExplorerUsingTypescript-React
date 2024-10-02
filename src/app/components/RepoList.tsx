@@ -6,13 +6,14 @@ import {
   setRepositoryId,
 } from "../slices/RepoListSlice";
 import { RootState } from "../store";
-import { useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { clearToken } from "../slices/HomeSlice";
 import { Repository } from "../Types";
 import { clearRepositoryDetails } from "../slices/RepositoryDetailsSlice";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 const RepoList = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     repos,
     loading,
@@ -21,7 +22,7 @@ const RepoList = () => {
     startCursor,
     hasNextPage,
     hasPrevPage,
-  } = useSelector((state: RootState) => state.repoList);
+  } = useAppSelector((state) => state.repoList);
 
   // To prevent fetching data multiple times
   const hasFetched = useRef(false);

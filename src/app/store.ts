@@ -4,6 +4,7 @@ import { rootEpic } from './rootEpic';
 import tokenReducer from './slices/HomeSlice';
 import reposListReducer from './slices/RepoListSlice';
 import repoDetailsReducer from './slices/RepositoryDetailsSlice';
+import authReducer from './slices/AuthSlice';
 import { composeWithDevTools } from 'redux-devtools-extension'; 
 
 const epicMiddleware: EpicMiddleware<any, any, any> = createEpicMiddleware(); 
@@ -14,11 +15,12 @@ export const store = configureStore({
     token: tokenReducer,
     repoList : reposListReducer,
     repositoryDetails: repoDetailsReducer,
+    auth :authReducer
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      thunk: false, 
+      thunk: false,   
     }).concat(epicMiddleware as Middleware),
 });
 

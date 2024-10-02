@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setToken, validateToken, resetError } from "../slices/HomeSlice";
+import {
+  setToken,
+  validateToken,
+  resetError,
+  clearToken,
+} from "../slices/HomeSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { RootState } from "../store";
 import { CONFIG } from "../config/config";
+import { login } from "../slices/AuthSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -23,6 +29,7 @@ const Home = () => {
   useEffect(() => {
     if (isValid) {
       dispatch(setToken(newToken));
+      dispatch(login());
       navigate("/repositories");
     }
   }, [isValid, newToken, dispatch, navigate]);
@@ -51,16 +58,21 @@ const Home = () => {
               </label>
               <div>
                 <input
-                  id="apiToken"
+                  data-testid="apiToken"
                   type="text"
                   className="form-control"
                   value={newToken}
                   onChange={handleInputChange}
                   placeholder="Enter your token here"
+                  required
                 />
               </div>
             </div>
-            <button type="submit" className="btn btn-primary btn-block mt-3">
+            <button
+              type="submit"
+              data-testid="submitButton"
+              className="btn btn-primary btn-block mt-3"
+            >
               Start Browsing
             </button>
             {error && (
